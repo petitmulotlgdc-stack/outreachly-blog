@@ -1,9 +1,6 @@
 import os
-import sys
 from pathlib import Path
 from typing import Dict, Optional
-
-sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from distributor.linkedin import post_to_linkedin
 from distributor.medium import post_to_medium
