@@ -2,8 +2,6 @@ import os
 import sys
 from pathlib import Path
 
-# Ensure project root is in path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from generator.keywords import pick_keyword
 from generator.writer import write_article
@@ -26,6 +24,7 @@ def run(
     )
     print(f"Article generated: {article.title}")
 
+    Path(posts_dir).mkdir(parents=True, exist_ok=True)
     post_path = Path(posts_dir) / article.filename()
     post_path.write_text(article.to_markdown(), encoding="utf-8")
     print(f"Saved to: {post_path}")
@@ -35,10 +34,14 @@ if __name__ == "__main__":
     from dotenv import load_dotenv
     load_dotenv()
 
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        sys.exit("Error: ANTHROPIC_API_KEY is not set. Add it to your .env file.")
+
     repo_root = Path(__file__).parent.parent
     run(
         keywords_path=str(repo_root / "keywords.json"),
         affiliates_path=str(repo_root / "affiliates.json"),
         posts_dir=str(repo_root / "site" / "_posts"),
-        api_key=os.environ["ANTHROPIC_API_KEY"],
+        api_key=api_key,
     )
