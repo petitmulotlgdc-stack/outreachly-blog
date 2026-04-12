@@ -1,17 +1,24 @@
 ---
-layout: home
+layout: default
 title: Outreachly Blog — Tools & Strategies for Coaches and Consultants
 ---
-<div style="max-width:800px;margin:0 auto;padding:2rem;font-family:system-ui,sans-serif;">
-  <h1>Outreachly Blog</h1>
-  <p>Best tools and automation strategies for coaches, consultants, and entrepreneurs.</p>
-  <hr>
-  <ul>
-    {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}"><strong>{{ post.title }}</strong></a>
-      <span style="color:#888;font-size:.9em;"> — {{ post.date | date: "%B %d, %Y" }}</span>
-    </li>
-    {% endfor %}
-  </ul>
+{% assign latest = site.posts.first %}
+{% if latest %}
+<div class="home-hero">
+  <p class="home-label">A la une</p>
+  <a class="home-hero-title" href="{{ latest.url | relative_url }}">{{ latest.title }}</a>
+  <p class="home-meta">{{ latest.date | date: "%B %d, %Y" }}</p>
+  <div class="home-accent"></div>
+</div>
+{% endif %}
+
+<div class="post-list">
+  {% for post in site.posts offset:1 %}
+  <article class="post-row">
+    <a href="{{ post.url | relative_url }}">
+      <span class="post-row-title">{{ post.title }}</span>
+      <span class="post-row-meta">{{ post.date | date: "%d %b %Y" }}</span>
+    </a>
+  </article>
+  {% endfor %}
 </div>

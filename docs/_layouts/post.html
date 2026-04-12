@@ -1,0 +1,14 @@
+---
+layout: default
+---
+<article class="post">
+  <header class="post-header">
+    <p class="post-category">Guide</p>
+    <h1 class="post-title">{{ page.title }}</h1>
+    <p class="post-meta">{{ page.date | date: "%B %d, %Y" }}</p>
+    <div class="post-accent"></div>
+  </header>
+  <div class="post-content">
+    {{ content }}
+  </div>
+</article>
