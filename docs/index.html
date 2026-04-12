@@ -12,6 +12,7 @@ title: Outreachly Blog — Tools & Strategies for Coaches and Consultants
 </div>
 {% endif %}
 
+{% if site.posts.size > 1 %}
 <div class="post-list">
   {% for post in site.posts offset:1 %}
   <article class="post-row">
@@ -22,3 +23,4 @@ title: Outreachly Blog — Tools & Strategies for Coaches and Consultants
   </article>
   {% endfor %}
 </div>
+{% endif %}

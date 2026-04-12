@@ -93,7 +93,7 @@ main { padding-top: 48px; padding-bottom: 64px; }
 }
 
 /* Home: post list */
-.post-list { padding-bottom: 48px; }
+.post-list { padding-bottom: 48px; margin-top: 8px; }
 
 .post-row { border-bottom: 1px solid #e8e8e8; }
 
@@ -168,7 +168,7 @@ main { padding-top: 48px; padding-bottom: 64px; }
   color: #333;
 }
 
-.post-content h1 { display: none; }
+.post-content h1:first-of-type { display: none; }
 
 .post-content h2 {
   font-size: 22px;
