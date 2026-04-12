@@ -1,4 +1,4 @@
-name: Generate Article
+name: Generate and Distribute Article
 
 on:
   schedule:
@@ -29,10 +29,24 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python generator/generate.py
 
-      - name: Commit and push
+      - name: Commit and push article
         run: |
           git config user.name "Outreachly Bot"
           git config user.email "bot@outreachly.pro"
           git add docs/_posts/ keywords.json
           git diff --staged --quiet || git commit -m "feat: publish article $(date +%Y-%m-%d)"
           git push
+
+      - name: Distribute article
+        env:
+          MEDIUM_TOKEN: ${{ secrets.MEDIUM_TOKEN }}
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
+          REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+        run: python distributor/distribute.py
