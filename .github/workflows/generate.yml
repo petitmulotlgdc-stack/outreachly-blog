@@ -33,6 +33,6 @@ jobs:
         run: |
           git config user.name "Outreachly Bot"
           git config user.email "bot@outreachly.pro"
-          git add site/_posts/ keywords.json
+          git add docs/_posts/ keywords.json
           git diff --staged --quiet || git commit -m "feat: publish article $(date +%Y-%m-%d)"
           git push

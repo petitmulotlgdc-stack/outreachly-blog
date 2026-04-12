@@ -42,6 +42,6 @@ if __name__ == "__main__":
     run(
         keywords_path=str(repo_root / "keywords.json"),
         affiliates_path=str(repo_root / "affiliates.json"),
-        posts_dir=str(repo_root / "site" / "_posts"),
+        posts_dir=str(repo_root / "docs" / "_posts"),
         api_key=api_key,
     )
