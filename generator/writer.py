@@ -35,12 +35,12 @@ def _inject_affiliate_links(body: str, affiliates: dict) -> str:
     return body
 
 
-def _extract_title(body: str) -> str:
+def _extract_title(body: str, fallback: str = "Article") -> str:
     """Extract H1 title from markdown body."""
     for line in body.splitlines():
         if line.startswith("# "):
             return line[2:].strip()
-    return "Article"
+    return fallback
 
 
 def write_article(keyword: str, affiliates_path: str, api_key: str) -> Article:
@@ -72,9 +72,11 @@ Return only the Markdown content, no front matter."""
         messages=[{"role": "user", "content": user_prompt}],
     )
 
+    if not response.content or not response.content[0].text:
+        raise ValueError(f"Empty response from Claude API for keyword: {keyword!r}")
     body = response.content[0].text
     body = _inject_affiliate_links(body, affiliates)
-    title = _extract_title(body)
+    title = _extract_title(body, fallback=keyword.title())
     slug = keyword_to_slug(keyword)
 
     return Article(

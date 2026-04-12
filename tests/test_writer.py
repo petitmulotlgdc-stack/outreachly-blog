@@ -33,6 +33,7 @@ def test_write_article_returns_article(tmp_path):
 
     assert isinstance(article, Article)
     assert article.keyword == "best CRM for coaches"
+    assert article.title == "Best CRM for Coaches"
     assert len(article.body) > 10
     assert article.date == date.today()
 
@@ -55,3 +56,4 @@ def test_write_article_injects_affiliate_links(tmp_path):
         )
 
     assert "https://brevo.com/?via=outreachly" in article.body
+    assert "https://apollo.io/?via=outreachly" in article.body
