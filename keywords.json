@@ -14,7 +14,7 @@
     "tool": ["Brevo", "Apollo", "Notion", "Calendly", "GoHighLevel"],
     "task": ["lead generation", "client onboarding", "invoicing", "scheduling", "email outreach", "follow-ups"],
     "n": [5, 7, 10],
-    "year": ["2025", "2026"]
+    "year": ["2026"]
   },
   "used": []
 }
