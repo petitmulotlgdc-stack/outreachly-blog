@@ -1,0 +1,23 @@
+title: Outreachly Blog
+description: Best tools and strategies for coaches and consultants
+url: https://blog.outreachly.pro
+baseurl: ""
+author: Outreachly Team
+email: hello@outreachly.pro
+
+permalink: /:year/:month/:day/:title/
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-feed
+
+markdown: kramdown
+highlighter: rouge
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
