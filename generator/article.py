@@ -12,11 +12,12 @@ class Article:
 
     def to_markdown(self) -> str:
         """Return Jekyll-compatible Markdown with front matter."""
+        safe_title = self.title.replace('"', '\\"')
         front_matter = f"""---
 layout: post
-title: "{self.title}"
+title: "{safe_title}"
 date: {self.date.isoformat()}
-description: "{self.title} — Expert guide for coaches and consultants."
+description: "{safe_title} — Expert guide for coaches and consultants."
 ---
 
 """

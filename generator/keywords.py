@@ -19,45 +19,48 @@ def _fill_template(template: str, variables: dict) -> str:
     for key, values in variables.items():
         placeholder = "{" + key + "}"
         if placeholder in result:
-            result = result.replace(placeholder, str(random.choice(values)), 1)
+            result = result.replace(placeholder, str(random.choice(values)))
     return result
 
 
 def _to_slug(keyword: str) -> str:
     """Convert keyword to URL-safe slug."""
-    slug = keyword.lower()
+    import unicodedata
+    slug = unicodedata.normalize("NFKD", keyword).encode("ascii", "ignore").decode("ascii")
+    slug = slug.lower()
     slug = re.sub(r"[^a-z0-9\s-]", "", slug)
     slug = re.sub(r"\s+", "-", slug.strip())
-    return slug
+    return slug or "article"
 
 
 def pick_keyword(keywords_path: str) -> str:
     """Pick an unused keyword, mark it as used, return it."""
-    data = _load(keywords_path)
-    templates = data["templates"]
-    variables = data["variables"]
-    used = set(data.get("used", []))
+    while True:
+        data = _load(keywords_path)
+        templates = data["templates"]
+        variables = data["variables"]
+        used = set(data.get("used", []))
 
-    # Generate all possible keywords (up to 100 combinations)
-    candidates = []
-    for _ in range(200):
-        template = random.choice(templates)
-        keyword = _fill_template(template, variables)
-        if keyword not in used:
-            candidates.append(keyword)
-        if len(candidates) >= 20:
-            break
+        # Generate up to 20 candidate keywords from 200 random attempts
+        candidates = []
+        for _ in range(200):
+            template = random.choice(templates)
+            keyword = _fill_template(template, variables)
+            if keyword not in used:
+                candidates.append(keyword)
+            if len(candidates) >= 20:
+                break
 
-    # If exhausted, reset used list
-    if not candidates:
-        data["used"] = []
+        # If exhausted, reset used list and retry
+        if not candidates:
+            data["used"] = []
+            _save(keywords_path, data)
+            continue
+
+        keyword = random.choice(candidates)
+        data["used"] = list(used) + [keyword]
         _save(keywords_path, data)
-        return pick_keyword(keywords_path)
-
-    keyword = random.choice(candidates)
-    data["used"] = list(used) + [keyword]
-    _save(keywords_path, data)
-    return keyword
+        return keyword
 
 
 def keyword_to_slug(keyword: str) -> str:
