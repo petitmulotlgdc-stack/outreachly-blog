@@ -2,8 +2,8 @@ import os
 from pathlib import Path
 from typing import Dict, Optional
 
+from distributor.devto import post_to_devto
 from distributor.linkedin import post_to_linkedin
-from distributor.medium import post_to_medium
 from distributor.post_reader import read_latest_post
 from distributor.reddit import post_to_reddit
 from distributor.twitter import post_to_twitter
@@ -19,15 +19,15 @@ def distribute(posts_dir: str) -> Dict[str, str]:
     print(f"Distributing: {post.title} ({post.url})")
     results: Dict[str, str] = {}
 
-    # Medium
-    medium_token = os.environ.get("MEDIUM_TOKEN")
-    if medium_token:
+    # Dev.to
+    devto_key = os.environ.get("DEVTO_API_KEY")
+    if devto_key:
         try:
-            url = post_to_medium(post, token=medium_token)
-            results["medium"] = url
-            print(f"✓ Medium: {url}")
+            url = post_to_devto(post, api_key=devto_key)
+            results["devto"] = url
+            print(f"✓ Dev.to: {url}")
         except Exception as e:
-            print(f"✗ Medium failed: {e}")
+            print(f"✗ Dev.to failed: {e}")
 
     # Reddit
     reddit_id = os.environ.get("REDDIT_CLIENT_ID")
