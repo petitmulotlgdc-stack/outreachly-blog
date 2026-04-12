@@ -7,14 +7,63 @@
     "{tool} review: is it worth it for {niche}?"
   ],
   "variables": {
-    "tool_category": ["CRM", "email marketing", "lead generation", "scheduling", "project management", "invoicing", "cold outreach"],
-    "niche": ["coaches", "consultants", "freelancers", "small business owners", "entrepreneurs"],
-    "tool_a": ["Brevo", "Apollo", "Notion", "Calendly", "Monday.com", "GoHighLevel"],
-    "tool_b": ["Mailchimp", "Hunter.io", "Asana", "Acuity", "ClickUp", "HubSpot"],
-    "tool": ["Brevo", "Apollo", "Notion", "Calendly", "GoHighLevel"],
-    "task": ["lead generation", "client onboarding", "invoicing", "scheduling", "email outreach", "follow-ups"],
-    "n": [5, 7, 10],
-    "year": ["2026"]
+    "tool_category": [
+      "CRM",
+      "email marketing",
+      "lead generation",
+      "scheduling",
+      "project management",
+      "invoicing",
+      "cold outreach"
+    ],
+    "niche": [
+      "coaches",
+      "consultants",
+      "freelancers",
+      "small business owners",
+      "entrepreneurs"
+    ],
+    "tool_a": [
+      "Brevo",
+      "Apollo",
+      "Notion",
+      "Calendly",
+      "Monday.com",
+      "GoHighLevel"
+    ],
+    "tool_b": [
+      "Mailchimp",
+      "Hunter.io",
+      "Asana",
+      "Acuity",
+      "ClickUp",
+      "HubSpot"
+    ],
+    "tool": [
+      "Brevo",
+      "Apollo",
+      "Notion",
+      "Calendly",
+      "GoHighLevel"
+    ],
+    "task": [
+      "lead generation",
+      "client onboarding",
+      "invoicing",
+      "scheduling",
+      "email outreach",
+      "follow-ups"
+    ],
+    "n": [
+      5,
+      7,
+      10
+    ],
+    "year": [
+      "2026"
+    ]
   },
-  "used": []
+  "used": [
+    "top 5 invoicing tools in 2026"
+  ]
 }
