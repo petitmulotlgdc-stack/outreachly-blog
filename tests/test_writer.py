@@ -57,3 +57,41 @@ def test_write_article_injects_affiliate_links(tmp_path):
 
     assert "https://brevo.com/?via=outreachly" in article.body
     assert "https://apollo.io/?via=outreachly" in article.body
+
+
+def test_write_article_short_uses_low_token_count(tmp_path):
+    from generator.writer import write_article
+
+    affiliates_path = make_affiliates(tmp_path)
+    mock_response = MagicMock()
+    mock_response.content = [MagicMock(text="# Short Article\n\nBody.")]
+
+    with patch("generator.writer.anthropic.Anthropic") as mock_client_cls:
+        mock_client = MagicMock()
+        mock_client_cls.return_value = mock_client
+        mock_client.messages.create.return_value = mock_response
+
+        write_article(keyword="CRM tools", affiliates_path=affiliates_path, api_key="k", long=False)
+
+        call_kwargs = mock_client.messages.create.call_args[1]
+
+    assert call_kwargs["max_tokens"] == 2000
+
+
+def test_write_article_long_uses_high_token_count(tmp_path):
+    from generator.writer import write_article
+
+    affiliates_path = make_affiliates(tmp_path)
+    mock_response = MagicMock()
+    mock_response.content = [MagicMock(text="# Long Article\n\nBody.")]
+
+    with patch("generator.writer.anthropic.Anthropic") as mock_client_cls:
+        mock_client = MagicMock()
+        mock_client_cls.return_value = mock_client
+        mock_client.messages.create.return_value = mock_response
+
+        write_article(keyword="CRM tools", affiliates_path=affiliates_path, api_key="k", long=True)
+
+        call_kwargs = mock_client.messages.create.call_args[1]
+
+    assert call_kwargs["max_tokens"] == 5000

@@ -43,14 +43,20 @@ def _extract_title(body: str, fallback: str = "Article") -> str:
     return fallback
 
 
-def write_article(keyword: str, affiliates_path: str, api_key: str) -> Article:
+def write_article(keyword: str, affiliates_path: str, api_key: str, long: bool = False) -> Article:
     affiliates = _load_affiliates(affiliates_path)
 
-    # Find which tools are relevant to this keyword
     relevant_tools = [tool for tool in affiliates if tool.lower() in keyword.lower()]
     tools_hint = f"Relevant tools to mention: {', '.join(relevant_tools)}" if relevant_tools else ""
 
-    user_prompt = f"""Write a 1500-2000 word SEO-optimized blog post about: "{keyword}"
+    if long:
+        word_target = "2000-2500 words"
+        max_tokens = 5000
+    else:
+        word_target = "700-900 words"
+        max_tokens = 2000
+
+    user_prompt = f"""Write a {word_target} SEO-optimized blog post about: "{keyword}"
 
 Target audience: coaches, consultants, and small business owners.
 
@@ -67,7 +73,7 @@ Return only the Markdown content, no front matter."""
     client = anthropic.Anthropic(api_key=api_key)
     response = client.messages.create(
         model="claude-haiku-4-5-20251001",
-        max_tokens=3000,
+        max_tokens=max_tokens,
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": user_prompt}],
     )
